@@ -20,6 +20,7 @@ metadata {
 		capability "Actuator"
 		capability "Sensor"
 		capability "Switch"
+		capability "Lock" // this is a hack for IFTTT; should make a child device
         attribute "myQDeviceId", "string"
 
 		command "updateDeviceStatus", ["string"]
@@ -51,16 +52,36 @@ def off() {
     updateDeviceStatus("off")
 }
 
+def lock() {
+	log.debug "Light received LOCK update"
+    updateDeviceStatus("lock")
+}
+
+def unlock() {
+	log.debug "Light received UNLOCK update"
+    updateDeviceStatus("unlock")
+}
+
 def updateDeviceStatus(status) {
+    def switchState = device.currentState("switch")?.value
+    
     if (status == "off"){
-    	log.debug "Updating status to off"
-        sendEvent(name: "switch", value: "off", display: true, displayed: true, isStateChange: true, descriptionText: device.displayName + " was off")
+    	log.debug "Updating status to off" + " (was " + switchState + ")"
+        sendEvent(name: "switch", value: "off", display: true, displayed: true, isStateChange: true, descriptionText: device.displayName + " was [" + switchState + "]")
     }
 	else if (status == "on"){
-    	log.debug "Updating status to on"
-        sendEvent(name: "switch", value: "on", displayed: true, display: true, isStateChange: true, descriptionText: device.displayName + " was on")
+    	log.debug "Updating status to on" + " (was " + switchState + ")"
+        sendEvent(name: "switch", value: "on", displayed: true, display: true, isStateChange: true, descriptionText: device.displayName + " was [" + switchState + "]")
     }
-    else{
+    else if (status == "unlock"){
+    	log.debug "Updating status to off (unlock; was " + switchState + ")"
+        sendEvent(name: "switch", value: "off", display: true, displayed: true, isStateChange: (switchState != "off"), descriptionText: device.displayName + " was [" + switchState + "]")
+    }
+    else if (status == "lock"){
+    	log.debug "Updating status to on (lock; was " + switchState + ")"
+        sendEvent(name: "switch", value: "on", displayed: true, display: true, isStateChange: (switchState != "on"), descriptionText: device.displayName + " was [" + switchState + "]")
+    }
+    else {
     	log.warn "Unknown light status."
     }
 }
