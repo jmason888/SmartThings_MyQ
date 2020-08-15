@@ -3,7 +3,7 @@
 
 ### Current Notes
 * Please note this SmartApp cannot read the status of the MyQ door using the MyQ tilt sensor. Getting the door status will require a separate SmartThings-compatible sensor. It's an unfortunate hassle but is the only way we can do this without polling MyQ for status (which they will not allow done from the SmartThings cloud).
-* This SmartApp is currently only supported in the **SmartThings Classic mobile app**; the new app does not yet support custom apps like this
+* This SmartApp generally works with the new SmartThings app but still has some bugs when viewing the door tiles (a fix for this is in progress). It is still fully supported in the Classic mobile app.
 * If you get an error saying "No supported devices found," the most likely cause is you're running an older version of the SmartApp. Double check to see you're using the latest code. If you're still having trouble, there's a small chance your IDE info is not sync'd properly across all SmartThings cloud shards. One way to tell this is by checking the Hubs link and noticing your hub missing. Another  way to check that is to reset all cookies and log in again (or try from a different computer) to see if it logs you into a different shard at that point, which will let you verify if things are out of sync. If there's a problem with that, SmartThings support can help.
 
 ### Overview
@@ -91,7 +91,7 @@ There are 6 code files available for the installations of this app - 1 SmartApp 
 | SmartApp      | MyQ Lite | <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/smartapps/brbeaird/myq-lite.src/myq-lite.groovy">Link</a> |Required|
 | Device Handler | MyQ Garage Door Opener | <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/devicetypes/brbeaird/myq-garage-door-opener.src/myq-garage-door-opener.groovy">Link</a> |Needed if using door sensors|
 | Device Handler | MyQ Garage Door Opener-NoSensor | <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/devicetypes/brbeaird/myq-garage-door-opener-nosensor.src/myq-garage-door-opener-nosensor.groovy">Link</a> |Needed if NOT using door sensors|
-| Device Handler | Momentary Button Tile | <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/devicetypes/brbeaird/momentary-button-tile.src/momentary-button-tile.groovy">Link</a> |Helpful for no-sensor installs to add buttons in routines/ActionTiles/Alexa|
+| Device Handler | Virtual Switch Tile | <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/devicetypes/brbeaird/virtual-switch.src/virtual-switch.groovy">Link</a> |Helpful for no-sensor installs to add buttons in routines/ActionTiles/Alexa|
 | Device Handler | Light Controller | <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/devicetypes/brbeaird/myq-light-controller.src/myq-light-controller.groovy">Link</a> |Only needed if using a plug-in MyQ Lamp Controller|
 | Device Handler | MyQ Lock Door | <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/devicetypes/brbeaird/myq-lock-door.src/myq-lock-door.groovy">Link</a> |Only needed if using the lock-type door functionality|
 
@@ -102,7 +102,7 @@ There are 6 code files available for the installations of this app - 1 SmartApp 
 3. Click on **My Device Handlers** -> **Create new Device Handler** -> **From Code**.
 4. Copy contents of <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/devicetypes/brbeaird/myq-garage-door-opener.src/myq-garage-door-opener.groovy">Door Opener (original sensor version) </a> and paste into text area. in SmartApps section. Click **Create**. Click **Publish** > **For Me** (you can ignore this step if you don't have a door sensor)
 5. Repeat the previous step for this door type code: <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/devicetypes/brbeaird/myq-garage-door-opener-nosensor.src/myq-garage-door-opener-nosensor.groovy">Door Opener (no sensor version)</a> (you can ignore this step if using a sensor)
-6. Repeat the previous step for the Momentary Tile device type code: <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/devicetypes/smartthings/momentary-button-tile.src/momentary-button-tile.groovy">Momentary Button Tile</a>
+6. Repeat the previous step for the Virtual Switch Tile device type code: <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/devicetypes/brbeaird/virtual-switch.src/virtual-switch.groovy">Virtual Switch Tile</a>
 6. Repeat the previous step for the Light Controller device type code: <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/devicetypes/brbeaird/myq-light-controller.src/myq-light-controller.groovy">Light Controller</a>
 6. Now we create the SmartApp code. Click **My SmartApps** -> **New Smartapp** -> **From Code**.
 7. Copy contents of <a href="https://raw.githubusercontent.com/brbeaird/SmartThings_MyQ/master/smartapps/brbeaird/myq-lite.src/myq-lite.groovy">SmartApp</a> and paste into text area. in SmartApps section. Click **Create**. Click **Publish** > **For Me**
